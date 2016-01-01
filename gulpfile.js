@@ -36,7 +36,7 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('frontend', function() {
-    var frontendPackages = ["foundation-sites", "jquery", "moment", "vue"];
+    var frontendPackages = ["foundation-sites", "jquery", "moment"];
 
     var glob = "node_modules/+(" + frontendPackages.join("|") + ")/**/*.*";
     gutil.log(glob);
