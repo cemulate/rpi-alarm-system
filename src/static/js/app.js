@@ -6,11 +6,10 @@ function refreshManualState() {
 
 function refreshDate() {
 	$.get('/next', function(data) {
-		console.log(data);
 		if (data == "") {
 			$("#nextTime").text("OFF");
 		} else {
-			$("#nextTime").text(moment(data).format("ddd, hA"));
+			$("#nextTime").text(moment(data).format("ddd, h:mm A"));
 		}
 	});
 }
@@ -35,8 +34,6 @@ $(document).ready(function() {
 
 		while ((chosen - now) < 0) chosen.add(12, 'hours');
 
-		console.log(chosen.toDate());
-
 		$.post('/setnext', {
 			next: chosen.toJSON()
 		}, function(data) {
@@ -46,7 +43,6 @@ $(document).ready(function() {
 
 	$("#manualSwitch").on("click", function() {
 		var b = $("#manualSwitch").prop("checked");
-		console.log(b);
 		$.post('/manual', {
 			state: b
 		});

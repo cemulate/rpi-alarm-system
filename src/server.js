@@ -36,7 +36,7 @@ var setupScheduleAtTime = function(t) {
 		});
 		sTasks = dates.map((d, i) => {
 			return schedule.scheduleJob(d, () => {
-				console.log("Setting light speed: ", speeds[i]);
+				console.log(new Date(), "Setting light speed: ", speeds[i]);
 				manager.hz = speeds[i];
 			});
 		});
@@ -54,9 +54,7 @@ var setupScheduleAtTime = function(t) {
 
 // Request parameters: next (momentjs object)
 app.post('/setnext', function(req, res, next) {
-	console.log(req.body);
 	nextTime = (req.body.next == "") ? null : moment(req.body.next);
-	if (nextTime != null) console.log(nextTime.toDate());
 	setupScheduleAtTime(nextTime);
 	res.send("OK");
 });
@@ -67,7 +65,6 @@ app.get('/next', function(req, res, next) {
 
 // Parameters: state (boolean)
 app.post('/manual', function(req, res, next) {
-	console.log(req.body);
 	manualState = (req.body.state == "true");
 	manager.hz = -1;
 	manager.setLight(manualState ? lightmanager.LON : lightmanager.LOFF);
