@@ -2,6 +2,8 @@
 
 var childProcess = require('child_process');
 
+var moment = require('moment');
+
 const LON = false;
 const LOFF = true;
 
@@ -14,6 +16,7 @@ class LightManager {
 	}
 
 	set hz(hz) {
+		console.log(moment().format("ddd hh:mmA"), "Setting light speed to " + hz.toString());
 		this._hz = hz;
 		if (this.t != null) {
 			clearInterval(this.t);

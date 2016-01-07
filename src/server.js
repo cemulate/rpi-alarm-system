@@ -23,7 +23,7 @@ var manager = new lightmanager.LightManager(15);
 var manualState = false;
 
 var offsets = [60, 50, 40, 30];
-var speeds = [1, 3, 10, 20];
+var speeds = [1, 3, 10, 15];
 
 var setupScheduleAtTime = function(t) {
 	sTasks.map(x => x.cancel());
@@ -36,18 +36,18 @@ var setupScheduleAtTime = function(t) {
 		});
 		sTasks = dates.map((d, i) => {
 			return schedule.scheduleJob(d, () => {
-				console.log(new Date(), "Setting light speed: ", speeds[i]);
 				manager.hz = speeds[i];
 			});
 		});
 		var last = schedule.scheduleJob(t.toDate(), () => {
-			console.log("Time. Turning light off.");
 			manager.hz = -1;
 			manager.setLight(lightmanager.LOFF);
 			nextTime = null;
 		});
 		sTasks.push(last);
 	}
+	console.log("Scheduled events.");
+	console.log(sTasks);
 }
 
 // API
@@ -73,7 +73,7 @@ app.post('/manual', function(req, res, next) {
 
 app.get('/manual', function(req, res, next) {
 	res.send(manualState);
-})
+});
 
 // Launch the app
 var serverPort = 80;
